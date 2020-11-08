@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, TextInput, Button } from 'react-native';
 
-export const AddTodo = () => {
+export const AddTodo = ({onSubmit}) => {
 
     return (
         <View style={styles.block}>
             <TextInput style={styles.input} />
-            <Button title='Добавить' />
+            <Button 
+            title='Добавить' 
+            onPress={() => onSubmit('name')} />
         </View>
     )
 }
