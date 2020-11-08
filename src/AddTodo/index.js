@@ -21,6 +21,8 @@ export const AddTodo = ({onSubmit}) => {
                 onChangeText={setValue}
                 value={value}
                 placeholder='Введите название задачи...'
+                autoCorrect={false}
+                autoCapitalize='none'
             />
             <Button 
                 title='Добавить' 
