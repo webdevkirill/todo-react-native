@@ -17,7 +17,8 @@ export const styles = StyleSheet.create({
     block: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 15
     },
     input: {
         width: '70%',
