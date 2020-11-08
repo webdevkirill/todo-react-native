@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AddTodo } from './src/AddTodo';
 import { Navbar } from './src/Navbar';
 import { Todo } from './src/Todo';
@@ -11,7 +11,7 @@ export default function App() {
     const addTodo = (title) => {
         setTodos((prevTodos) => [...prevTodos, 
             {
-                id: Date.now().toString(),
+                id: `${Date.now().toString()}_${title}`,
                 title
             }
         ])
@@ -22,13 +22,11 @@ export default function App() {
             <Navbar title='TodoApp' />
             <View style={styles.container}>
                 <AddTodo onSubmit={addTodo} />
-                <View>
-                    {
-                        todos.map((todo) => (
-                            <Todo todo={todo} key={todo.id} />
-                        ))
-                    }
-                </View>
+                <FlatList
+                    data={todos}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => <Todo todo={item} /> }
+                />
                 <StatusBar />
             </View>
         </View>
