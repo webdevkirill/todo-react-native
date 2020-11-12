@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-export const Todo = ({todo, onRemove}) => {
+export const Todo = ({todo, onRemove, onOpen}) => {
     return (
         <TouchableOpacity 
             activeOpacity={0.5} 
             onLongPress={() => onRemove(todo.id)}
+            onPress={() => onOpen(todo.id)}
         >
             <View style={styles.todo}>
                 <Text>{todo.title}</Text>
