@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { AddTodo } from './src/AddTodo';
-import { Navbar } from './src/Navbar';
-import { Todo } from './src/Todo';
+import { StyleSheet, View } from 'react-native';
+import { Navbar } from './src/components/Navbar';
+import { MainScreen } from './src/screens/MainScreen';
+import { TodoScreen } from './src/screens/TodoScreen';
 
 export default function App() {
     const [todos, setTodos] = useState([]);
+    const [todoId, setTodoId] = useState(null);
 
     const addTodo = (title) => {
         setTodos((prevTodos) => [...prevTodos, 
@@ -21,16 +22,22 @@ export default function App() {
         setTodos((prevState) => prevState.filter((todo) => todo.id !== id))
     }
 
+    let content = (
+    <MainScreen 
+        addTodo={addTodo} 
+        todos={todos} 
+        removeTodo={removeTodo} />
+    );
+
+    if (todoId) {
+        content = <TodoScreen />
+    }
+
     return (
         <View>
             <Navbar title='TodoApp' />
             <View style={styles.container}>
-                <AddTodo onSubmit={addTodo} />
-                <FlatList
-                    data={todos}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({item}) => <Todo todo={item} onRemove={removeTodo} /> }
-                />
+                { content }
                 <StatusBar />
             </View>
         </View>
