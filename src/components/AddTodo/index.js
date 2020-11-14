@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import { THEME } from '../../theme';
 
 export const AddTodo = ({onSubmit}) => {
@@ -25,10 +26,9 @@ export const AddTodo = ({onSubmit}) => {
                 autoCorrect={false}
                 autoCapitalize='none'
             />
-            <Button 
-                title='Добавить' 
-                onPress={addTodoHandler}
-            />
+            <AntDesign.Button onPress={addTodoHandler} name="plus">
+                Добавить
+            </AntDesign.Button>
         </View>
     )
 }
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
         marginBottom: 15
     },
     input: {
-        width: '70%',
+        width: '60%',
         padding: 10,
         borderStyle: 'solid',
         borderBottomWidth: 2,
