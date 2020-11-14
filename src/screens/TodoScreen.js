@@ -4,9 +4,13 @@ import { THEME } from '../theme';
 import { Card } from '../components/UI/Card';
 import { EditModal } from '../components/EditModal/index';
 
-export const TodoScreen = ({goBack, todo, removeTodo}) => {
+export const TodoScreen = ({goBack, todo, removeTodo, editTitle}) => {
 
     const [modal, setModal] = useState(false);
+    const saveTitleHandler = (title) => {
+        editTitle(todo.id, title);
+        setModal(false);
+    }
 
     return (
         <View>
@@ -35,6 +39,8 @@ export const TodoScreen = ({goBack, todo, removeTodo}) => {
             <EditModal 
                 visible={modal}
                 onCancel={() => setModal(false)}
+                value={todo.title}
+                editTitle={saveTitleHandler}
             />
         </View>
     )
