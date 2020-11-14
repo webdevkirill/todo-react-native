@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { THEME } from '../theme';
 import { Card } from '../components/UI/Card';
 
-export const TodoScreen = ({goBack, todo}) => {
+export const TodoScreen = ({goBack, todo, removeTodo}) => {
 
     return (
         <View>
@@ -24,7 +24,7 @@ export const TodoScreen = ({goBack, todo}) => {
                     <Button 
                         title="Удалить" 
                         color={THEME.DANGER_COLOR} 
-                        onPress={() => {console.log('remove')}} />
+                        onPress={() => removeTodo(todo.id)} />
                 </View>
             </View>
         </View>
