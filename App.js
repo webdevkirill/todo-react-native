@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+
 import { Navbar } from './src/components/Navbar';
 import { MainScreen } from './src/screens/MainScreen';
 import { TodoScreen } from './src/screens/TodoScreen';
-import * as Font from 'expo-font';
 
 const loadApp = async () => {
     await Font.loadAsync({
@@ -19,6 +21,16 @@ export default function App() {
         {id: '2', title: 'Написать приложение'}
     ]);
     const [todoId, setTodoId] = useState(null);
+    const [isAppReady, setIsAppReady] = useState(false);
+
+    if (!isAppReady) {
+        return (
+            <AppLoading 
+                startAsync={loadApp}
+                onFinish={() => setIsAppReady(true)}
+            />
+        )
+    }
 
     const addTodo = (title) => {
         setTodos((prevTodos) => [...prevTodos, 
