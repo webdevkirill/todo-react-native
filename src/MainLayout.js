@@ -5,25 +5,12 @@ import { THEME } from './theme';
 import { TodoScreen } from './screens/TodoScreen';
 import { MainScreen } from './screens/MainScreen';
 import { TodoContext } from './context/todo/TodoContext';
+import { ScreenContext } from './context/screen/screenContext';
 
 export const MainLayout = () => {
 
     const {todos, addTodo, removeTodo, updateTodo} = useContext(TodoContext);
-
-    // const [todos, setTodos] = useState([
-    //     {id: '1', title: 'Выучить React Native'},
-    //     {id: '2', title: 'Написать приложение'}
-    // ]);
-    const [todoId, setTodoId] = useState(null);
-
-    // const addTodo = (title) => {
-    //     setTodos((prevTodos) => [...prevTodos, 
-    //         {
-    //             id: `${Date.now().toString()}_${title}`,
-    //             title
-    //         }
-    //     ])
-    // }
+    const {todoId, changeScreen} = useContext(ScreenContext);
 
     // const removeTodo = (id) => {
     //     const taskName = todos.find((todo) => todo.id === id).title;
@@ -47,21 +34,12 @@ export const MainLayout = () => {
     //     )
     // }
 
-    // const updateTodo = (id, title) => {
-    //     setTodos((prevState) => [...prevState].map((todo) => {
-    //         if (todo.id === id) {
-    //             todo.title = title
-    //         }
-    //         return todo
-    //     }))
-    // }
-
     let content = (
     <MainScreen 
         addTodo={addTodo} 
         todos={todos} 
         removeTodo={removeTodo}
-        openTodo={(id) => setTodoId(id)} />
+        openTodo={(id) => changeScreen(id)} />
     );
     
 
@@ -70,7 +48,7 @@ export const MainLayout = () => {
         content = <TodoScreen
                     removeTodo={removeTodo} 
                     todo={todo} 
-                    goBack={() => setTodoId(null)}
+                    goBack={() => changeScreen(null)}
                     editTitle={updateTodo} />
     }
 
