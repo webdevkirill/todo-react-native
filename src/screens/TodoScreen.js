@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { THEME } from '../theme';
@@ -6,12 +6,19 @@ import { Card } from '../components/UI/Card';
 import { EditModal } from '../components/EditModal/index';
 import { AppTextBold } from '../components/UI/AppTextBold/index';
 import { AppButton } from '../components/UI/AppButton/index';
+import { TodoContext } from '../context/todo/TodoContext';
+import { ScreenContext } from '../context/screen/screenContext';
 
-export const TodoScreen = ({goBack, todo, removeTodo, editTitle}) => {
+export const TodoScreen = () => {
+
+    const {todos, removeTodo, updateTodo} = useContext(TodoContext);
+    const {todoId, changeScreen} = useContext(ScreenContext);
+
+    const todo = todos.find(t => t.id === todoId);
 
     const [modal, setModal] = useState(false);
     const saveTitleHandler = (title) => {
-        editTitle(todo.id, title);
+        updateTodo(todo.id, title);
         setModal(false);
     }
 
@@ -26,7 +33,7 @@ export const TodoScreen = ({goBack, todo, removeTodo, editTitle}) => {
             <View style={styles.buttons}>
                 <View style={styles.button}>
                     <AppButton 
-                        onPress={goBack} 
+                        onPress={() => changeScreen(null)} 
                         color={THEME.GREY_COLOR}
                     >
                         <AntDesign name="back" size={20} color="#fff" />
