@@ -8,53 +8,53 @@ import { TodoContext } from './context/todo/TodoContext';
 
 export const MainLayout = () => {
 
-    const todosContext = useContext(TodoContext);
+    const {todos, addTodo, removeTodo, updateTodo} = useContext(TodoContext);
 
-    const [todos, setTodos] = useState([
-        {id: '1', title: 'Выучить React Native'},
-        {id: '2', title: 'Написать приложение'}
-    ]);
+    // const [todos, setTodos] = useState([
+    //     {id: '1', title: 'Выучить React Native'},
+    //     {id: '2', title: 'Написать приложение'}
+    // ]);
     const [todoId, setTodoId] = useState(null);
 
-    const addTodo = (title) => {
-        setTodos((prevTodos) => [...prevTodos, 
-            {
-                id: `${Date.now().toString()}_${title}`,
-                title
-            }
-        ])
-    }
+    // const addTodo = (title) => {
+    //     setTodos((prevTodos) => [...prevTodos, 
+    //         {
+    //             id: `${Date.now().toString()}_${title}`,
+    //             title
+    //         }
+    //     ])
+    // }
 
-    const removeTodo = (id) => {
-        const taskName = todos.find((todo) => todo.id === id).title;
-        Alert.alert(
-            'Удаление элемента',
-            `Вы уверены, что хотите удалить задачу "${taskName}"?`,
-            [
-                {
-                    text: 'Отмена',
-                    style: 'cancel',
-                },
-                {
-                    text: 'Удалить',
-                    style: 'destructive',
-                    onPress: () => {
-                        setTodoId(null);
-                        setTodos((prevState) => prevState.filter((todo) => todo.id !== id));
-                    }
-                }
-            ]
-        )
-    }
+    // const removeTodo = (id) => {
+    //     const taskName = todos.find((todo) => todo.id === id).title;
+    //     Alert.alert(
+    //         'Удаление элемента',
+    //         `Вы уверены, что хотите удалить задачу "${taskName}"?`,
+    //         [
+    //             {
+    //                 text: 'Отмена',
+    //                 style: 'cancel',
+    //             },
+    //             {
+    //                 text: 'Удалить',
+    //                 style: 'destructive',
+    //                 onPress: () => {
+    //                     setTodoId(null);
+    //                     setTodos((prevState) => prevState.filter((todo) => todo.id !== id));
+    //                 }
+    //             }
+    //         ]
+    //     )
+    // }
 
-    const updateTodo = (id, title) => {
-        setTodos((prevState) => [...prevState].map((todo) => {
-            if (todo.id === id) {
-                todo.title = title
-            }
-            return todo
-        }))
-    }
+    // const updateTodo = (id, title) => {
+    //     setTodos((prevState) => [...prevState].map((todo) => {
+    //         if (todo.id === id) {
+    //             todo.title = title
+    //         }
+    //         return todo
+    //     }))
+    // }
 
     let content = (
     <MainScreen 
