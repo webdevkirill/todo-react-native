@@ -6,6 +6,8 @@ import { THEME } from '../theme';
 import { TodoContext } from '../context/todo/TodoContext';
 import { ScreenContext } from '../context/screen/screenContext';
 import { AppLoader } from '../components/UI/AppLoader';
+import { AppText } from '../components/UI/AppText';
+import { AppButton } from '../components/UI/AppButton/index';
 
 export const MainScreen = () => {
 
@@ -59,6 +61,15 @@ export const MainScreen = () => {
         return <AppLoader />
     }
 
+    if (error) {
+        return (
+            <View style={styles.errorWrapper}>
+                <AppText style={styles.error}>{error}</AppText>
+                <AppButton onPress={loadTodos}>Повторить</AppButton>
+            </View>
+        )
+    }
+
     return (
         <View>
             <AddTodo onSubmit={addTodo} />
@@ -78,5 +89,15 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'contain'
+    },
+    errorWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    error: {
+        fontSize: 20,
+        color: THEME.DANGER_COLOR,
+        marginBottom: 15
     }
 });

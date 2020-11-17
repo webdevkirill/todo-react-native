@@ -59,15 +59,21 @@ export const TodoState = ({ children }) => {
     const clearError = () => dispatch({type: CLEAR_ERROR});
     const fetchTodos = async () => {
         toggleLoader();
-        const responce = await fetch(`${dbUrl}/todos.json`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const data = await responce.json();
-        const todos = Object.keys(data).map(key => ({...data[key], id: key}));
-        dispatch({type: FETCH_TODOS, todos});
-        toggleLoader();
+        clearError();
+        try {
+            const responce = await fetch(`${dbUrl}/todos.json`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await responce.json();
+            const todos = Object.keys(data).map(key => ({...data[key], id: key}));
+            dispatch({type: FETCH_TODOS, todos});
+        } catch (e) {
+            showError('Что-то пошло не так...');
+        } finally {
+            toggleLoader();
+        }
     }
 
     return (
