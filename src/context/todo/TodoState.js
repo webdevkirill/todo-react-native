@@ -30,7 +30,21 @@ export const TodoState = ({ children }) => {
         const data = await responce.json();
         dispatch({ type: ADD_TODO, title, id: data.name });
     }
-    const updateTodo = (id, title) => dispatch({type: UPDATE_TODO, id, title})
+    const updateTodo = async (id, title) => {
+        try {
+            await fetch(`${dbUrl}/todos/${id}.json`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({title})
+            })
+            dispatch({type: UPDATE_TODO, id, title})
+        } catch (e) {
+            showError('Что-то пошло не так...');
+        }
+        
+    }
     const removeTodo = (id) => {
         const taskName = todos.find(t => t.id === id).title;
         Alert.alert(
