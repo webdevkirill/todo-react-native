@@ -1,7 +1,7 @@
 import React, { useContext, useReducer } from 'react';
 import { TodoContext } from './TodoContext';
 import { todoReducer } from './todoReducer';
-import { ADD_TODO, REMOVE_TODO, UPDATE_TODO, TOGGLE_LOADER, SHOW_ERROR, CLEAR_ERROR } from '../types';
+import { ADD_TODO, REMOVE_TODO, UPDATE_TODO, TOGGLE_LOADER, SHOW_ERROR, CLEAR_ERROR, FETCH_TODOS } from '../types';
 import { ScreenContext } from '../screen/screenContext';
 import { Alert } from 'react-native';
 
@@ -17,7 +17,7 @@ export const TodoState = ({ children }) => {
     const {changeScreen} = useContext(ScreenContext);
 
     const [state, dispatch] = useReducer(todoReducer, initialState);
-    const {todos} = state;
+    const {todos, loading, error} = state;
 
     const addTodo = async (title) => {
         const responce = await fetch(`${dbUrl}/todos.json`, {
@@ -57,12 +57,23 @@ export const TodoState = ({ children }) => {
     const toggleLoader = () => dispatch({type: TOGGLE_LOADER});
     const showError = (error) => dispatch({type: SHOW_ERROR, error});
     const clearError = () => dispatch({type: CLEAR_ERROR});
+    const fetchTodos = async () => {
+        const responce = await fetch(`${dbUrl}/todos.json`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await responce.json();
+        const todos = Object.keys(data).map(key => ({...data[key], id: key}));
+        dispatch({type: FETCH_TODOS, todos});
+    }
 
     return (
         <TodoContext.Provider 
             value={{
-                todos,
-                addTodo, removeTodo, updateTodo
+                todos, loading, error,
+                addTodo, removeTodo, updateTodo,
+                fetchTodos
             }}
         >
             {children}
