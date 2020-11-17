@@ -12,13 +12,24 @@ export const TodoState = ({ children }) => {
         loading: false,
         error: null
     };
+    const dbUrl = 'https://todo-react-native-651fc.firebaseio.com/';
 
     const {changeScreen} = useContext(ScreenContext);
 
     const [state, dispatch] = useReducer(todoReducer, initialState);
     const {todos} = state;
 
-    const addTodo = (title) => dispatch({ type: ADD_TODO, title });
+    const addTodo = async (title) => {
+        const responce = await fetch(`${dbUrl}/todos.json`, {
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ title })
+        });
+        const data = await responce.json();
+        dispatch({ type: ADD_TODO, title, id: data.name });
+    }
     const updateTodo = (id, title) => dispatch({type: UPDATE_TODO, id, title})
     const removeTodo = (id) => {
         const taskName = todos.find(t => t.id === id).title;
