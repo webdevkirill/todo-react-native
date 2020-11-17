@@ -58,6 +58,7 @@ export const TodoState = ({ children }) => {
     const showError = (error) => dispatch({type: SHOW_ERROR, error});
     const clearError = () => dispatch({type: CLEAR_ERROR});
     const fetchTodos = async () => {
+        toggleLoader();
         const responce = await fetch(`${dbUrl}/todos.json`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -66,6 +67,7 @@ export const TodoState = ({ children }) => {
         const data = await responce.json();
         const todos = Object.keys(data).map(key => ({...data[key], id: key}));
         dispatch({type: FETCH_TODOS, todos});
+        toggleLoader();
     }
 
     return (
