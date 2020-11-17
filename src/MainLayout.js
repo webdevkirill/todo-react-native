@@ -11,28 +11,6 @@ export const MainLayout = () => {
 
     const {todoId} = useContext(ScreenContext);
 
-    // const removeTodo = (id) => {
-    //     const taskName = todos.find((todo) => todo.id === id).title;
-    //     Alert.alert(
-    //         'Удаление элемента',
-    //         `Вы уверены, что хотите удалить задачу "${taskName}"?`,
-    //         [
-    //             {
-    //                 text: 'Отмена',
-    //                 style: 'cancel',
-    //             },
-    //             {
-    //                 text: 'Удалить',
-    //                 style: 'destructive',
-    //                 onPress: () => {
-    //                     setTodoId(null);
-    //                     setTodos((prevState) => prevState.filter((todo) => todo.id !== id));
-    //                 }
-    //             }
-    //         ]
-    //     )
-    // }
-
     return (
         <View>
             <Navbar title='TodoApp' />
